@@ -54,6 +54,14 @@
         .btn-wa { background: #25d366; }
         img.galeri-img { width: 100%; border-radius: 10px; margin-bottom: 10px; object-fit: cover; height: 200px; }
 
+        /* Tombol Musik di pojok kanan bawah */
+        .music-btn {
+            position: fixed; bottom: 20px; right: 20px; z-index: 9999;
+            background: #027642; color: white; width: 50px; height: 50px;
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
         @media (max-width: 768px) {
             .menu { display: flex; flex-wrap: wrap; justify-content: center; }
             .menu a { margin: 5px; font-size: 10px; }
@@ -62,10 +70,19 @@
     </style>
 </head>
 <body>
+
+    <audio id="bgMusic"loop>
+        <source src="musik.mp3.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="music-btn" onclick="toggleMusic()">
+        <i id="musicIcon" class="bi bi-volume-mute"></i>
+    </div>
+
     <nav>
         <div class="logo" onclick="showSection('home')">SAHABAT YATIM</div>
         <div class="menu">
-            <a onclick="showSection('home')" id="nav-home">Home</a>
+            <a onclick="showSection('home')" id="nav-home" class="active">Home</a>
             <a onclick="showSection('tentang')" id="nav-tentang">Tentang</a>
             <a onclick="showSection('program')" id="nav-program">Program</a>
             <a onclick="showSection('galeri')" id="nav-galeri">Galeri</a>
@@ -129,10 +146,10 @@
     <section id="denah">
         <h2>Lokasi Yayasan</h2>
         <div style="text-align:center;">
-            <p style="margin-bottom: 20px;">Kunjungi kantor pusat kami di Rawa Mekar Jaya, Serpong, Tangerang Selatan.</p>
+            <p style="margin-bottom: 20px;">Kunjungi yayasan kami di Rawa Mekar Jaya, Serpong, Tangerang Selatan.</p>
             <img src="lokasi.PNG" alt="Denah Lokasi" style="max-width: 100%; border-radius: 15px; border: 2px solid #eee;">
             <br>
-            <a href="https://www.google.com/maps?cid=8364334466491939661&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ" target="_blank" class="btn-link">
+            <a href="https://maps.google.com" target="_blank" class="btn-link">
                 <i class="bi bi-geo-alt"></i> Petunjuk Lokasi
             </a>
         </div>
@@ -161,7 +178,7 @@
                 <i class="bi bi-heart-fill" style="font-size: 45px; color: #e91e63;"></i>
                 <h3>Zakat Fitrah</h3>
                 <p>Sudah bayar? Kirim bukti zakat fitrah Anda via WhatsApp.</p>
-                <a href="https://wa.me/628998226669?text=Halo%20Admin,%20saya%20ingin%20mengirim%20bukti%20Zakat%20Fitrah." target="_blank" class="btn-link btn-wa">
+                <a href="https://wa.me/628998226669" target="_blank" class="btn-link btn-wa">
                     <i class="bi bi-whatsapp"></i> Kirim Bukti
                 </a>
             </div>
@@ -217,16 +234,45 @@
     </section>
 
     <script>
-        function showSection(sectionId) {
-            document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('.menu a').forEach(link => link.classList.remove('active'));
+        const audio = document.getElementById('bgMusic');
+        const icon = document.getElementById('musicIcon');
 
-            document.getElementById(sectionId).classList.add('active');
+        // FUNGSI UNTUK PINDAH MENU
+        function showSection(sectionId) {
+            // Sembunyikan semua section
+            document.querySelectorAll('section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+
+            // Hilangkan status active di menu navbar
+            document.querySelectorAll('.menu a').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Tampilkan section yang diklik
+            const activeSection = document.getElementById(sectionId);
+            activeSection.classList.add('active');
+
+            // Aktifkan warna di menu navbar
             const navLink = document.getElementById('nav-' + sectionId);
             if(navLink) navLink.classList.add('active');
             
             window.scrollTo(0, 0);
+
+            // Coba putar musik jika belum bunyi
+            playMusic();
         }
+
+        // FUNGSI MUSIK
+        function playMusic() {
+            audio.play().then(() => {
+                icon.classList.replace('bi-volume-mute', 'bi-volume-up');
+            }).catch(e => {
+                console.log("Klik apa saja di layar untuk suara...");
+            });
+        }
+
+      
     </script>
 </body>
 </html>
