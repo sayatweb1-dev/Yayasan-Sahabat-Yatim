@@ -233,67 +233,57 @@
         </div>
     </section>
 
-    <audio id="bgMusic" loop preload="auto">
-    <source src="sholawat.mp3" type="audio/mpeg">
-</audio>
+    <script>
+        const audio = document.getElementById('bgMusic');
+        const icon = document.getElementById('musicIcon');
 
-<script>
-    const audio = document.getElementById('bgMusic');
-    const icon = document.getElementById('musicIcon');
+        // FUNGSI UNTUK PINDAH MENU
+        function showSection(sectionId) {
+            document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.menu a').forEach(link => link.classList.remove('active'));
 
-    // Paksa volume sejak awal
-    audio.volume = 1.0;
+            const activeSection = document.getElementById(sectionId);
+            activeSection.classList.add('active');
 
-    function showSection(sectionId) {
-        document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
-        document.querySelectorAll('.menu a').forEach(link => link.classList.remove('active'));
+            const navLink = document.getElementById('nav-' + sectionId);
+            if(navLink) navLink.classList.add('active');
+            
+            window.scrollTo(0, 0);
 
-        const activeSection = document.getElementById(sectionId);
-        activeSection.classList.add('active');
+            // Trigger musik saat menu diklik
+            startAudio();
+        }
 
-        const navLink = document.getElementById('nav-' + sectionId);
-        if(navLink) navLink.classList.add('active');
-        
-        window.scrollTo(0, 0);
-
-        // Pemicu musik
-        playMusic();
-    }
-
-    function playMusic() {
-        // Trick: Browser lebih suka jika kita pastikan audio tidak muted sebelum play
-        audio.muted = false; 
-        
-        let playPromise = audio.play();
-
-        if (playPromise !== undefined) {
-            playPromise.then(() => {
+        // FUNGSI AKTIVASI AUDIO (Kunci sukses di HP)
+        function startAudio() {
+            audio.muted = false; // Memastikan suara aktif
+            audio.play().then(() => {
                 icon.classList.replace('bi-volume-mute', 'bi-volume-up');
             }).catch(error => {
-                console.log("Autoplay dicegah, menunggu klik...");
+                console.log("Autoplay diblokir, menunggu sentuhan pertama.");
             });
         }
-    }
 
-    function toggleMusic() {
-        if (audio.paused) {
-            audio.play();
-            icon.classList.replace('bi-volume-mute', 'bi-volume-up');
-        } else {
-            audio.pause();
-            icon.classList.replace('bi-volume-up', 'bi-volume-mute');
+        // FUNGSI TOMBOL ON/OFF (Manual)
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                icon.classList.replace('bi-volume-mute', 'bi-volume-up');
+            } else {
+                audio.pause();
+                icon.classList.replace('bi-volume-up', 'bi-volume-mute');
+            }
         }
-    }
 
-    // Pemicu Klik Pertama (Wajib untuk Chrome/HP)
-    window.addEventListener('click', () => {
-        playMusic();
-    }, { once: true });
+        // LISTENER UNTUK HP: Aktifkan musik saat layar pertama kali disentuh
+        // Ini cara yang sama digunakan pada undangan digital
+        document.addEventListener('touchstart', function() {
+            startAudio();
+        }, { once: true });
 
-    // Pemicu Sentuh Pertama (Untuk HP)
-    window.addEventListener('touchstart', () => {
-        playMusic();
-    }, { once: true });
-</script>
+        document.addEventListener('click', function() {
+            startAudio();
+        }, { once: true });
+    </script>
 </body>
 </html>
