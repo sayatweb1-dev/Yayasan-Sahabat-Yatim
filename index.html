@@ -282,6 +282,15 @@
                 icon.classList.replace('bi-volume-up', 'bi-volume-mute');
             }
         }
+        function playMusic() {
+    audio.muted = false; // Memastikan suara tidak terbungkam
+    audio.volume = 1.0;  // Memaksa volume ke maksimal (100%)
+    audio.play().then(() => {
+        icon.classList.replace('bi-volume-mute', 'bi-volume-up');
+    }).catch(e => {
+        console.log("Menunggu sentuhan user...");
+    });
+}
 
         // TRICK HP: Aktifkan suara saat layar disentuh atau diklik pertama kali
         document.addEventListener('touchstart', function() {
