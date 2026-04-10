@@ -71,7 +71,7 @@
 </head>
 <body>
 
-    <audio id="bgMusic"loop>
+    <audio id="bgMusic" loop preload="auto">
         <source src="musik.mp3.mp3" type="audio/mpeg">
     </audio>
 
@@ -107,7 +107,7 @@
                 Yayasan Sahabat Yatim adalah lembaga sosial yang berdedikasi penuh dalam upaya pengasuhan, pemberdayaan, dan perlindungan anak-anak yatim serta dhuafa. Kami hadir sebagai jembatan kebaikan bagi para dermawan untuk memberikan masa depan yang lebih layak bagi mereka yang membutuhkan.
             </p>
             <p style="text-align: justify; line-height: 1.8;">
-                Sebagai bentuk komitmen kami terhadap kepatuhan hukumdan transparansi, Yayasan Sahabat Yatim telah resmi berbadan hukum dan terdaftar melalui Keputusan Menteri Hukum Dan Hak Asasi Manusia Republik Indonesia Nomor: AHU-0028644.AH.01.04.TAHUN 2021. Dengan legalitas yang jelas, Kami memastikan bahwa setiap amanah yang dititipkan akan dikelola secara profesional,akuntabel,dan sesuai dengan regulasi yang berlaku di REPUBLIK INDONESIA.
+                Sebagai bentuk komitmen kami terhadap kepatuhan hukum dan transparansi, Yayasan Sahabat Yatim telah resmi berbadan hukum dan terdaftar melalui Keputusan Menteri Hukum Dan Hak Asasi Manusia Republik Indonesia Nomor: AHU-0028644.AH.01.04.TAHUN 2021. Dengan legalitas yang jelas, Kami memastikan bahwa setiap amanah yang dititipkan akan dikelola secara profesional, akuntabel, dan sesuai dengan regulasi yang berlaku di REPUBLIK INDONESIA.
             </p>
         </div>
     </section>
@@ -259,20 +259,38 @@
             
             window.scrollTo(0, 0);
 
-            // Coba putar musik jika belum bunyi
+            // Pemicu musik saat klik menu apa pun (Efektif untuk HP)
             playMusic();
         }
 
-        // FUNGSI MUSIK
+        // FUNGSI MUSIK UTAMA
         function playMusic() {
             audio.play().then(() => {
                 icon.classList.replace('bi-volume-mute', 'bi-volume-up');
             }).catch(e => {
-                console.log("Klik apa saja di layar untuk suara...");
+                console.log("Menunggu sentuhan user untuk suara...");
             });
         }
 
-      
+        // FUNGSI TOMBOL MANUAL (Toggle)
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                icon.classList.replace('bi-volume-mute', 'bi-volume-up');
+            } else {
+                audio.pause();
+                icon.classList.replace('bi-volume-up', 'bi-volume-mute');
+            }
+        }
+
+        // TRICK HP: Aktifkan suara saat layar disentuh atau diklik pertama kali
+        document.addEventListener('touchstart', function() {
+            playMusic();
+        }, { once: true });
+
+        document.addEventListener('click', function() {
+            playMusic();
+        }, { once: true });
     </script>
 </body>
 </html>
