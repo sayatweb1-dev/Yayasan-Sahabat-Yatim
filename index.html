@@ -9,64 +9,132 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --primary: #027642;
+            --primary-light: #03a35b;
+            --accent: #ffc107;
+            --text-dark: #2d3436;
+            --bg-light: #f8f9fa;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
 
-        body { background: #f4f7f6; color: #222; overflow-x: hidden; }
+        body { background: var(--bg-light); color: var(--text-dark); overflow-x: hidden; }
 
         /* ================= NAVBAR ================= */
         nav {
-            width: 100%; height: 75px; background: white; display: flex;
-            justify-content: space-between; align-items: center; padding: 0 7%;
-            position: fixed; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            width: 100%; height: 80px; background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px); display: flex;
+            justify-content: space-between; align-items: center; padding: 0 5%;
+            position: fixed; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-        .logo { font-weight: 700; color: #027642; font-size: 1.2rem; cursor: pointer; }
+        .logo { font-weight: 800; color: var(--primary); font-size: 1.4rem; cursor: pointer; letter-spacing: -1px; }
+        
+        .menu { display: flex; gap: 10px; }
         .menu a { 
-            text-decoration: none; color: #555; font-weight: 500; 
-            margin-left: 15px; font-size: 11px; text-transform: uppercase; 
-            cursor: pointer; transition: 0.3s;
+            text-decoration: none; color: #636e72; font-weight: 500; 
+            padding: 8px 12px; font-size: 12px; text-transform: uppercase; 
+            cursor: pointer; transition: 0.3s; border-radius: 8px;
         }
-        .menu a:hover, .menu a.active { color: #027642; font-weight: 700; }
+        .menu a:hover, .menu a.active { 
+            color: var(--primary); background: rgba(2, 118, 66, 0.1); font-weight: 700; 
+        }
 
         /* ================= SECTIONS ================= */
         section {
-            display: none; width: 90%; max-width: 1000px;
-            margin: 100px auto 40px; padding: 40px;
-            background: white; border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); min-height: 70vh;
+            display: none; width: 90%; max-width: 1100px;
+            margin: 120px auto 40px; padding: 50px 30px;
+            background: white; border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.03); min-height: 60vh;
         }
-        section.active { display: block; animation: fadeIn 0.5s ease; }
+        section.active { display: block; animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { 
+            from { opacity: 0; transform: translateY(30px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
 
+        /* ================= HOME HERO ================= */
         #home { 
-            background: linear-gradient(135deg, #027642 0%, #03a35b 100%); 
-            color: white; border-radius: 20px; text-align: center;
+            background: linear-gradient(rgba(2, 118, 66, 0.8), rgba(2, 118, 66, 0.9)), url('sayat12.jpg') center/cover;
+            color: white; border-radius: 30px; text-align: center;
             display: none; align-items: center; flex-direction: column; justify-content: center;
+            border: none;
         }
         #home.active { display: flex; }
-        #home img { width: 200px; border-radius: 50%; border: 5px solid white; margin-bottom: 20px; }
+        #home img { 
+            width: 160px; height: 160px; border-radius: 50%; border: 8px solid rgba(255,255,255,0.2); 
+            margin-bottom: 25px; object-fit: cover; box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        #home h1 { font-size: 2.5rem; letter-spacing: 2px; margin-bottom: 5px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        #home p { font-weight: 300; letter-spacing: 3px; font-size: 1rem; opacity: 0.9; }
 
-        h2 { color: #027642; margin-bottom: 25px; text-align: center; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .card { padding: 30px 20px; border-radius: 15px; border: 1px solid #eee; text-align: center; background: #fdfdfd; transition: 0.3s; }
-        .bank-card { text-align: left; padding: 20px; background: #f9f9f9; border-radius: 12px; margin-bottom: 10px; border-left: 5px solid #027642; }
-        .btn-link { display: inline-block; margin-top: 15px; padding: 10px 20px; background: #027642; color: white; text-decoration: none; border-radius: 8px; border: none; cursor: pointer; font-weight: 500; }
-        .btn-wa { background: #25d366; }
-        img.galeri-img { width: 100%; border-radius: 10px; margin-bottom: 10px; object-fit: cover; height: 200px; }
+        /* ================= CONTENT STYLES ================= */
+        h2 { 
+            color: var(--primary); margin-bottom: 35px; text-align: center; font-weight: 700; 
+            font-size: 2rem; position: relative; padding-bottom: 10px;
+        }
+        h2::after {
+            content: ''; width: 60px; height: 4px; background: var(--accent);
+            position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); border-radius: 2px;
+        }
 
-        /* Tombol Musik di pojok kanan bawah */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 20px; }
+        
+        .card { 
+            padding: 40px 25px; border-radius: 24px; border: 1px solid #f1f1f1; 
+            text-align: center; background: white; transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+        }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); border-color: var(--primary); }
+        .card i { font-size: 50px; display: block; margin-bottom: 20px; transition: 0.3s; }
+        .card:hover i { transform: scale(1.1); }
+
+        .bank-card { 
+            text-align: left; padding: 25px; background: #f8faf9; border-radius: 18px; 
+            margin-bottom: 15px; border-left: 6px solid var(--primary); position: relative;
+            overflow: hidden;
+        }
+        .bank-card h3 { color: var(--primary); font-size: 1.5rem; margin: 5px 0; }
+
+        .btn-link { 
+            display: inline-block; margin-top: 15px; padding: 14px 30px; 
+            background: var(--primary); color: white; text-decoration: none; 
+            border-radius: 12px; border: none; cursor: pointer; font-weight: 600; 
+            transition: 0.3s; box-shadow: 0 4px 15px rgba(2, 118, 66, 0.3);
+        }
+        .btn-link:hover { background: var(--primary-light); transform: scale(1.05); box-shadow: 0 6px 20px rgba(2, 118, 66, 0.4); }
+        .btn-wa { background: #25d366; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); }
+
+        img.galeri-img { 
+            width: 100%; border-radius: 18px; margin-bottom: 10px; 
+            object-fit: cover; height: 250px; transition: 0.4s; filter: grayscale(20%);
+        }
+        img.galeri-img:hover { filter: grayscale(0); transform: scale(1.03); }
+
         .music-btn {
-            position: fixed; bottom: 20px; right: 20px; z-index: 9999;
-            background: #027642; color: white; width: 50px; height: 50px;
+            position: fixed; bottom: 30px; right: 30px; z-index: 9999;
+            background: var(--primary); color: white; width: 55px; height: 55px;
             border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.2); transition: 0.3s;
+        }
+        .music-btn:hover { transform: rotate(15deg) scale(1.1); }
+
+        @media (max-width: 768px) {
+            nav { height: auto; padding: 15px 20px; flex-direction: column; }
+            .logo { margin-bottom: 10px; }
+            .menu { justify-content: center; flex-wrap: wrap; }
+            .menu a { padding: 6px 10px; font-size: 10px; }
+            section { padding: 30px 20px; margin-top: 160px; }
+            #home h1 { font-size: 1.8rem; }
         }
 
         @media (max-width: 768px) {
-            .menu { display: flex; flex-wrap: wrap; justify-content: center; }
-            .menu a { margin: 5px; font-size: 10px; }
-            section { padding: 20px; margin-top: 130px; }
-        }
+    .menu a { 
+        padding: 4px 6px; 
+        font-size: 9px; /* Kecilkan sedikit lagi agar muat semua menu */
+    }
+}
     </style>
 </head>
 <body>
@@ -76,14 +144,14 @@
     </audio>
 
     <div class="music-btn" onclick="toggleMusic()">
-        <i id="musicIcon" class="bi bi-volume-mute"></i>
+        <i id="musicIcon" class="bi bi-volume-mute" style="font-size: 1.5rem;"></i>
     </div>
 
     <nav>
-        <div class="logo" onclick="showSection('home')">SAHABAT YATIM</div>
+        <div class="logo" onclick="showSection('home')"><i class="bi bi-heart-fill"></i> SAHABAT YATIM</div>
         <div class="menu">
             <a onclick="showSection('home')" id="nav-home" class="active">Home</a>
-            <a onclick="showSection('tentang')" id="nav-tentang">Tentang</a>
+            <a onclick="showSection('tentang')" id="nav-tentang">Profil</a>
             <a onclick="showSection('program')" id="nav-program">Program</a>
             <a onclick="showSection('galeri')" id="nav-galeri">Galeri</a>
             <a onclick="showSection('denah')" id="nav-denah">Lokasi</a>
@@ -96,18 +164,22 @@
 
     <section id="home" class="active">
         <img src="logo.jpeg" alt="Logo"> 
-        <h1>YAYASAN SAHABAT YATIM</h1>
-        <p>RAWA MEKAR JAYA, TANGERANG SELATAN</p>
+        <h1>SAHABAT YATIM</h1>
+        <p>Amanah • Profesional • Unggul</p>
+        <button class="btn-link" style="margin-top: 30px;" onclick="showSection('tentang')">Kenali Kami Lebih Dekat</button>
     </section>
 
     <section id="tentang">
         <h2>Tentang Kami</h2>
         <div style="text-align: center; max-width: 800px; margin: 0 auto;">
-            <p style="text-align: justify; line-height: 1.8; margin-bottom: 20px;">
-                Yayasan Sahabat Yatim adalah lembaga sosial yang berdedikasi penuh dalam upaya pengasuhan, pemberdayaan, dan perlindungan anak-anak yatim serta dhuafa. Kami hadir sebagai jembatan kebaikan bagi para dermawan untuk memberikan masa depan yang lebih layak bagi mereka yang membutuhkan.
-            </p>
-            <p style="text-align: justify; line-height: 1.8;">
-                Sebagai bentuk komitmen kami terhadap kepatuhan hukum dan transparansi, Yayasan Sahabat Yatim telah resmi berbadan hukum dan terdaftar melalui Keputusan Menteri Hukum Dan Hak Asasi Manusia Republik Indonesia Nomor: AHU-0028644.AH.01.04.TAHUN 2021. Dengan legalitas yang jelas, Kami memastikan bahwa setiap amanah yang dititipkan akan dikelola secara profesional, akuntabel, dan sesuai dengan regulasi yang berlaku di REPUBLIK INDONESIA.
+            <div style="background: #fdfdfd; padding: 30px; border-radius: 20px; border: 1px dashed #ddd; margin-bottom: 30px;">
+                <p style="text-align: justify; line-height: 1.8; color: #555;">
+                    <strong style="color: var(--primary);">Yayasan Sahabat Yatim</strong> adalah lembaga sosial yang berdedikasi penuh dalam upaya pengasuhan, pemberdayaan, dan perlindungan anak-anak yatim serta dhuafa. Kami hadir sebagai jembatan kebaikan bagi para dermawan untuk memberikan masa depan yang lebih layak.
+                </p>
+            </div>
+            <p style="text-align: justify; line-height: 1.8; color: #666; font-size: 0.95rem;">
+                Resmi berbadan hukum melalui SK Kemenkumham Nomor: <br>
+                <span style="color: var(--primary); font-weight: 600;">AHU-0028644.AH.01.04.TAHUN 2021</span>.
             </p>
         </div>
     </section>
@@ -116,19 +188,19 @@
         <h2>Program Unggulan</h2>
         <div class="grid">
             <div class="card">
-                <i class="bi bi-book" style="font-size: 40px; color: #027642;"></i>
+                <i class="bi bi-book-half" style="color: #4a90e2;"></i>
                 <h3>Pendidikan Tinggi</h3>
                 <p>Beasiswa penuh untuk anak yatim berprestasi hingga jenjang kuliah.</p>
             </div>
             <div class="card">
-                <i class="bi bi-hospital" style="font-size: 40px; color: #027642;"></i>
+                <i class="bi bi-capsule" style="color: #e67e22;"></i>
                 <h3>Kesehatan Gratis</h3>
                 <p>Layanan pemeriksaan kesehatan rutin untuk anak asuh dan masyarakat dhuafa.</p>
             </div>
             <div class="card">
-                <i class="bi bi-house-heart" style="font-size: 40px; color: #027642;"></i>
+                <i class="bi bi-house-heart-fill" style="color: #e91e63;"></i>
                 <h3>Asrama Yatim</h3>
-                <p>Menyediakan tempat tinggal yang layak dengan bimbingan akhlak dan ibadah.</p>
+                <p>Tempat tinggal layak dengan bimbingan akhlak, ibadah, dan kemandirian.</p>
             </div>
         </div>
     </section>
@@ -140,28 +212,48 @@
             <img src="foto4.jpeg" class="galeri-img" alt="Kegiatan 2">
             <img src="sayat3.jpeg" class="galeri-img" alt="Kegiatan 3">
             <img src="ngaji.jpeg" class="galeri-img" alt="Kegiatan 4">
+            <img src="sayat10.jpeg" class="galeri-img" alt="Kegiatan 4">
+            <img src="sayat14.jpg" class="galeri-img" alt="Kegiatan 4">
+            <img src="sayat9.jpeg" class="galeri-img" alt="Kegiatan 4">
+            <img src="sayat1.jpeg" class="galeri-img" alt="Kegiatan 4">
+            
         </div>
     </section>
 
     <section id="denah">
-        <h2>Lokasi Yayasan</h2>
-        <div style="text-align:center;">
-            <p style="margin-bottom: 20px;">Kunjungi yayasan kami di Rawa Mekar Jaya, Serpong, Tangerang Selatan.</p>
-            <img src="lokasi.PNG" alt="Denah Lokasi" style="max-width: 100%; border-radius: 15px; border: 2px solid #eee;">
-            <br>
-            <a href="https://www.google.com/maps/place/Yayasan+Sahabat+Yatim+Rawa+Mekar+Jaya+-+SaYaT+RMJ+-+Saung+SaYaT/@-6.3093119,106.6918741,17z/data=!3m1!4b1!4m6!3m5!1s0x2e69e59f348844a1:0x741415e191cefb4d!8m2!3d-6.3093119!4d106.6944437!16s%2Fg%2F11p39nr3_c?entry=ttu&g_ep=EgoyMDI2MDQwOC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-link">
-    <i class="bi bi-geo-alt"></i> Petunjuk Lokasi
-</a>
+    <h2>Lokasi Yayasan</h2>
+    <div style="text-align:center;">
+        <p style="margin-bottom: 25px; color: #666;">Silakan kunjungi Yayasan kami di Rawa Mekar Jaya.</p>
+        
+        <div style="position: relative; overflow: hidden; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #eee; margin-bottom: 20px;">
+            <img src="lokasi.PNG" alt="Denah Lokasi" style="width: 100%; display: block;">
         </div>
-    </section>
+
+        <div class="grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+            <div class="card" style="padding: 20px;">
+                <i class="bi bi-geo-alt-fill" style="color: #d63031; font-size: 30px;"></i>
+                <p style="font-size: 0.9rem; margin-bottom: 15px;">
+                    Jl. Rawa Mekar Jaya, Serpong, Kota Tangerang Selatan, Banten
+                </p>
+                <a href="https://maps.app.goo.gl/k4YKbToedu3PrKzt7" target="_blank" class="btn-link">
+                    <i class="bi bi-map"></i> Buka Google Maps
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
 
     <section id="wakaf">
         <h2>Program Wakaf</h2>
-        <div style="background: #ffffff; border-radius: 20px; padding: 30px; border: 1px solid #eee; text-align: center;">
-            <img src="sayat1.jpeg" alt="Wakaf Asrama" style="width: 300px; max-width: 100%; border-radius: 15px; margin-bottom: 20px;">
-            <h3>Wakaf Pembangunan Asrama</h3>
-            <p style="margin: 15px 0;">Mari berinvestasi akhirat dengan berwakaf untuk pembangunan asrama yatim dhuafa. Setiap bata yang Anda wakafkan menjadi saksi pahala jariyah.</p>
-            <button class="btn-link" onclick="showSection('donasi')">Wakaf Sekarang</button>
+        <div style="max-width: 700px; margin: 0 auto; text-align: center;">
+            <div style="position: relative; overflow: hidden; border-radius: 20px; margin-bottom: 25px;">
+                <img src="sayat1.jpeg" alt="Wakaf Asrama" style="width: 100%; transition: 0.5s;">
+            </div>
+            <h3 style="color: var(--primary); margin-bottom: 15px;">Wakaf Pembangunan Asrama</h3>
+            <p style="color: #666; margin-bottom: 25px; line-height: 1.7;">
+                Mari berinvestasi akhirat dengan berwakaf untuk pembangunan asrama yatim dhuafa. Setiap bata yang Anda wakafkan menjadi saksi pahala jariyah yang tak terputus.
+            </p>
+            <button class="btn-link" onclick="showSection('donasi')">Salurkan Wakaf Terbaik</button>
         </div>
     </section>
 
@@ -169,43 +261,41 @@
         <h2>Layanan Zakat</h2>
         <div class="grid">
             <div class="card">
-                <i class="bi bi-coin" style="font-size: 45px; color: #027642;"></i>
+                <i class="bi bi-cash-stack" style="color: var(--primary);"></i>
                 <h3>Zakat Maal</h3>
-                <p>Bersihkan harta Anda dengan menunaikan zakat maal.</p>
-                <button onclick="showSection('donasi')" class="btn-link">Pilih Zakat</button>
+                <p>Bersihkan harta Anda sesuai syariat dengan menunaikan zakat maal.</p>
+                <button onclick="showSection('donasi')" class="btn-link">Tunaikan Zakat</button>
             </div>
             <div class="card">
-                <i class="bi bi-heart-fill" style="font-size: 45px; color: #e91e63;"></i>
-                <h3>Zakat Fitrah</h3>
-                <p>Sudah bayar? Kirim bukti zakat fitrah Anda via WhatsApp.</p>
+                <i class="bi bi-patch-check-fill" style="color: #25d366;"></i>
+                <h3>Konfirmasi Zakat</h3>
+                <p>Kirim bukti zakat fitrah atau maal Anda melalui layanan WhatsApp kami.</p>
                 <a href="https://wa.me/628998226669" target="_blank" class="btn-link btn-wa">
-                    <i class="bi bi-whatsapp"></i> Kirim Bukti
+                    <i class="bi bi-whatsapp"></i> Chat Admin
                 </a>
-            </div>
-            <div class="card">
-                <i class="bi bi-calculator" style="font-size: 45px; color: #027642;"></i>
-                <h3>Kalkulator Zakat</h3>
-                <p>Hitung kewajiban zakat Anda di website resmi BAZNAS.</p>
-                <a href="https://baznas.go.id/kalkulatorzakat" target="_blank" class="btn-link">Buka Kalkulator</a>
             </div>
         </div>
     </section>
 
     <section id="donasi">
         <h2>Rekening Donasi</h2>
-        <div class="bank-card">
-            <strong>Bank Syariah Indonesia (BSI)</strong>
-            <h3>7184057446</h3>
-            <p>A.N. Yayasan Sahabat Yatim</p>
+        <p style="text-align: center; margin-bottom: 30px; color: #666;">Silakan pilih metode transfer yang paling memudahkan Anda</p>
+        <div class="grid">
+            <div class="bank-card">
+                <small>Bank Syariah Indonesia (BSI)</small>
+                <h3>7184057446</h3>
+                <p>A.N. Yayasan Sahabat Yatim</p>
+            </div>
+            <div class="bank-card">
+                <small>Bank Mandiri</small>
+                <h3>1270012459515</h3>
+                <p>A.N. Yayasan Sahabat Yatim</p>
+            </div>
         </div>
-        <div class="bank-card">
-            <strong>Bank Mandiri</strong>
-            <h3>1270012459515</h3>
-            <p>A.N. Yayasan Sahabat Yatim</p>
-        </div>
-        <div style="text-align:center; margin-top:30px;">
-            <h3>SCAN QRIS</h3>
-            <img src="qris.jpeg" alt="QRIS" style="width: 250px; border-radius: 10px; margin-top: 15px;">
+        <div style="text-align:center; margin-top:40px; background: #fff; padding: 30px; border-radius: 20px; border: 1px solid #eee;">
+            <h3 style="margin-bottom: 20px;"><i class="bi bi-qr-code-scan"></i> Donasi Via QRIS</h3>
+            <img src="qris.jpeg" alt="QRIS" style="width: 250px; border: 10px solid #f8f8f8; border-radius: 15px;">
+            <p style="margin-top: 15px; font-size: 0.8rem; color: #999;">Scan menggunakan aplikasi bank atau e-wallet Anda</p>
         </div>
     </section>
 
@@ -214,20 +304,16 @@
         <div class="grid">
             <div class="card">
                 <a href="https://instagram.com/yayasansahabatyatim" target="_blank" style="text-decoration: none; color: inherit;">
-                    <i class="bi bi-instagram" style="font-size: 30px; color: #E1306C;"></i>
-                    <p style="margin-top: 10px;">@yayasansahabatyatim</p>
-                </a>
-            </div>
-            <div class="card">
-                <a href="mailto:info@sahabatyatim.org" style="text-decoration: none; color: inherit;">
-                    <i class="bi bi-envelope" style="font-size: 30px; color: #027642;"></i>
-                    <p style="margin-top: 10px;">info@sahabatyatim.org</p>
+                    <i class="bi bi-instagram" style="color: #E1306C;"></i>
+                    <p><strong>Instagram</strong></p>
+                    <p style="color: #888;">@yayasansahabatyatim</p>
                 </a>
             </div>
             <div class="card">
                 <a href="https://wa.me/628998226669" target="_blank" style="text-decoration: none; color: inherit;">
-                    <i class="bi bi-whatsapp" style="font-size: 30px; color: #25d366;"></i>
-                    <p style="margin-top: 10px;">WhatsApp Admin</p>
+                    <i class="bi bi-whatsapp" style="color: #25d366;"></i>
+                    <p><strong>WhatsApp</strong></p>
+                    <p style="color: #888;">0899-8226-669</p>
                 </a>
             </div>
         </div>
@@ -237,7 +323,6 @@
         const audio = document.getElementById('bgMusic');
         const icon = document.getElementById('musicIcon');
 
-        // FUNGSI UNTUK PINDAH MENU
         function showSection(sectionId) {
             document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('.menu a').forEach(link => link.classList.remove('active'));
@@ -248,23 +333,17 @@
             const navLink = document.getElementById('nav-' + sectionId);
             if(navLink) navLink.classList.add('active');
             
-            window.scrollTo(0, 0);
-
-            // Trigger musik saat menu diklik
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             startAudio();
         }
 
-        // FUNGSI AKTIVASI AUDIO (Kunci sukses di HP)
         function startAudio() {
-            audio.muted = false; // Memastikan suara aktif
+            audio.muted = false;
             audio.play().then(() => {
                 icon.classList.replace('bi-volume-mute', 'bi-volume-up');
-            }).catch(error => {
-                console.log("Autoplay diblokir, menunggu sentuhan pertama.");
-            });
+            }).catch(e => console.log("Waiting for user interaction"));
         }
 
-        // FUNGSI TOMBOL ON/OFF (Manual)
         function toggleMusic() {
             if (audio.paused) {
                 audio.play();
@@ -275,15 +354,9 @@
             }
         }
 
-        // LISTENER UNTUK HP: Aktifkan musik saat layar pertama kali disentuh
-        // Ini cara yang sama digunakan pada undangan digital
-        document.addEventListener('touchstart', function() {
-            startAudio();
-        }, { once: true });
-
-        document.addEventListener('click', function() {
-            startAudio();
-        }, { once: true });
+        ['touchstart', 'click'].forEach(evt => {
+            document.addEventListener(evt, () => startAudio(), { once: true });
+        });
     </script>
 </body>
 </html>
